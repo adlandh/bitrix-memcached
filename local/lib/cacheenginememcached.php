@@ -100,5 +100,21 @@ class CacheEngineMemcached implements ICacheEngine
         return $this->written;
     }
 
+    /*
+     * Always return ""
+     */
+    public function getCachePath()
+    {
+        return "";
+    }
+
+    /*
+     * Returns true if there's connection to memcached
+     */
+    public function isAvailable()
+    {
+        return self::$isConnected;
+    }
+
 
 }
