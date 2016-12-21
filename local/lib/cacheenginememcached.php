@@ -241,6 +241,8 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
 
         $arAllVars = self::$obMemcached->get($key);
 
+        $this->read=strlen(serialize($arAllVars));
+
         if ($arAllVars === false || $arAllVars === '')
         {
             return false;
@@ -286,6 +288,8 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
         }
 
         $key = self::$baseDirVersion[$baseDir]."|".$initDirVersion."|".$filename;
+
+        $this->written=strlen(serialize($arAllVars));
         self::$obMemcached->set($key, $arAllVars, $TTL);
     }
 
