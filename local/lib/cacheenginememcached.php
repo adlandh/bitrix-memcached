@@ -9,9 +9,8 @@
 namespace DHCache;
 
 use Bitrix\Main\Config;
-use Bitrix\Main\Data;
 
-class CacheEngineMemcached implements ICacheEngine, ICacheEngineStat
+class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Main\Data\ICacheEngineStat
 {
     /*
      * @var obMemcached - connection to memcached.
