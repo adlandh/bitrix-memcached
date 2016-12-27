@@ -43,6 +43,11 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
      */
     private static $baseDirVersion = array();
 
+    /*
+     * @var key - stored key
+     */
+
+    private $key='';
 
     /*
      * Constructor
@@ -118,7 +123,7 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
      */
     public function getCachePath()
     {
-        return "";
+        return $this->key;
     }
 
     /*
@@ -169,8 +174,7 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
                     $initDirVersion = "";
                 }
 
-                $key = self::$baseDirVersion[$baseDir] . "|" . $initDirVersion . "|" . $filename;
-                self::$obMemcached->replace($key, "", 0, 1);
+                self::$obMemcached->replace(self::$baseDirVersion[$baseDir] . "|" . $initDirVersion . "|" . $filename, "", 1);
             }
             else
             {
@@ -186,7 +190,8 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
                         return;
                     }
 
-                    self::$obMemcached->replace(self::$baseDirVersion[$baseDir] . "|" . $initDir, "", 0, 1);
+
+                    self::$obMemcached->replace(self::$baseDirVersion[$baseDir] . "|" . $initDir, "", 1);
                 }
                 else
                 {
@@ -195,7 +200,7 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
                         unset(self::$baseDirVersion[$baseDir]);
                     }
 
-                    self::$obMemcached->replace($this->sid . $baseDir, "", 0, 1);
+                    self::$obMemcached->replace($this->sid . $baseDir, "", 1);
                 }
             }
         }
@@ -237,9 +242,9 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
             $initDirVersion = "";
         }
 
-        $key = self::$baseDirVersion[$baseDir] . "|" . $initDirVersion . "|" . $filename;
+        $this->key = self::$baseDirVersion[$baseDir] . "|" . $initDirVersion . "|" . $filename;
 
-        $arAllVars = self::$obMemcached->get($key);
+        $arAllVars = self::$obMemcached->get($this->key);
 
         $this->read=strlen(serialize($arAllVars));
 
@@ -287,10 +292,10 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
             $initDirVersion = "";
         }
 
-        $key = self::$baseDirVersion[$baseDir]."|".$initDirVersion."|".$filename;
+        $this->key = self::$baseDirVersion[$baseDir]."|".$initDirVersion."|".$filename;
 
         $this->written=strlen(serialize($arAllVars));
-        self::$obMemcached->set($key, $arAllVars, $TTL);
+        self::$obMemcached->set($this->key, $arAllVars, $TTL);
     }
 
     /**
