@@ -123,7 +123,8 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
      */
     public function getCachePath()
     {
-        return $this->key;
+        //return $this->key;
+        return "";
     }
 
     /*
