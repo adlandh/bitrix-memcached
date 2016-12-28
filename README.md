@@ -1,4 +1,4 @@
-Поддержка кэширования через php-memcached v 1.1
+Поддержка кэширования Битрикс через php-memcached v 1.1
 (https://github.com/php-memcached-dev/php-memcached)
 
 Использование:
