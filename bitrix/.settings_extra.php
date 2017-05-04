@@ -14,6 +14,7 @@ return array(
             ),
             'hosts' => array(
                 array("127.0.0.1", "11211")
+            //    array("/tmp/memcached.sock", "0")
             ),
             'sid' => $_SERVER["DOCUMENT_ROOT"]."#01"
         ),
