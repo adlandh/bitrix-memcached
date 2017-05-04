@@ -61,7 +61,11 @@ class CacheEngineMemcached implements \Bitrix\Main\Data\ICacheEngine, \Bitrix\Ma
         {
             self::$obMemcached = new \Memcached();
 
-            if (isset($cacheConfig["hosts"]))
+            if (isset($cacheConfig["socket"]))
+            {
+                self::$isConnected = self::$obMemcached->addServer($cacheConfig["socket"], "0");
+            }
+            elseif (isset($cacheConfig["hosts"]) && is_array($cacheConfig["hosts"]))
             {
                 self::$isConnected = self::$obMemcached->addServers($cacheConfig["hosts"]);
             }
